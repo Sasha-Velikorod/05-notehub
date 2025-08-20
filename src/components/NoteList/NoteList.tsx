@@ -3,7 +3,11 @@ import { Note } from "../../types/note";
 import { deleteNote } from "../../services/noteService";
 import css from "./NoteList.module.css";
 
-const NoteList = ({ notes }: { notes: Note[] }) => {
+interface NoteListProps {
+  notes: Note[];
+}
+
+const NoteList = ({ notes }: NoteListProps) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({

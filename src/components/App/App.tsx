@@ -29,16 +29,25 @@ const App = () => {
     setCurrentPage(1);
   }, 1000);
 
+  const totalPages = data?.totalPages ?? 0;
+  const notes = data?.notes ?? [];
+
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox onSearch={handleSearch} />
-        <Pagination currentPage={currentPage} onChange={setCurrentPage} />
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            onChange={setCurrentPage}
+            totalPages={totalPages}
+          />
+        )}
         <button className={css.button} onClick={() => setModalIsOpen(true)}>
           Create note +
         </button>
       </header>
-      {data && <NoteList notes={data.notes} />}
+      {notes.length > 0 && <NoteList notes={notes} />}
       {modalIsOpen && (
         <Modal onClose={handleCloseModal}>
           <NoteForm onCloseModal={handleCloseModal} />

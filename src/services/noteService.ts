@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Note, NoteTag } from "../types/note";
+import { Note, NewNote } from "../types/note";
 
 const instance = axios.create({
   baseURL: "https://notehub-public.goit.study/api",
@@ -22,7 +22,7 @@ export const fetchNotes = async ({
   perPage = 12,
   search,
 }: FetchNotesParams = {}): Promise<FetchNotesResponse> => {
-  const response = await instance.get("/notes", {
+  const response = await instance.get<FetchNotesResponse>("/notes", {
     params: {
       page,
       perPage,
@@ -32,12 +32,12 @@ export const fetchNotes = async ({
   return response.data;
 };
 
-export const createNote = async (note: NoteTag): Promise<Note> => {
+export const createNote = async (note: NewNote): Promise<Note> => {
   const response = await instance.post<Note>(`/notes`, note);
   return response.data;
 };
 
 export const deleteNote = async (id: string): Promise<Note> => {
-  const response = await instance.delete(`/notes/${id}`);
+  const response = await instance.delete<Note>(`/notes/${id}`);
   return response.data;
 };
